@@ -35,7 +35,7 @@ def readSlash(line, index):
 
 
 def tokenize(line):
-    tokens1 = []
+    tokens = []
     index = 0
     while index < len(line):
         if line[index].isdigit():
@@ -102,6 +102,6 @@ while True:
     print '> ',
     line = raw_input()
     tokens1 = tokenize(line)
-    tokens = evaluate1(tokens1)
+    tokens = evaluate1(tokens)
     answer = evaluate2(tokens)
     print "answer = %f\n" % answer
