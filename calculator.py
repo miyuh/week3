@@ -10,9 +10,8 @@ def readNumber(line, index):
             number += int(line[index]) * keta
             keta *= 0.1
             index += 1
-    token = {'type': 'NUMBER', 'number': number}
+    token ={'type': 'NUMBER', 'number': number}
     return token, index
-
 
 def readPlus(line, index):
     token = {'type': 'PLUS'}
@@ -56,37 +55,58 @@ def tokenize(line):
         tokens.append(token)
     return tokens
 
-def evaluate1(tokens):
+def evaluate1(tokens): 
     answer = 0
     tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
-    index = 1
-    while index < len(tokens):
+    index = 2
+    length = len(tokens)
+    while index < length:
         if tokens[index]['type'] == 'NUMBER':
-            if index - 1 == 0:
-                tokens[index]['number'] = tokens[index]['number']
-            elif tokens[index - 1]['type'] == 'CROSS':
+            #if index - 1 == 0:
+                #tokens[index]['number'] = tokens[index]['number']
+            if tokens[index - 1]['type'] == 'CROSS':
                 tokens[index - 2]['number'] = tokens[index]['number']*tokens[index-2]['number']
                 k = index
-                while index < len(tokens):
-                 tokens[k-1] = tokens[k+1]
+                
+                index -=2
+                length -= 2
+                while k < length+1 :
+                 tokens[k - 1] = tokens[k + 1]
+            
                  k += 1
+                 i = 1
+                while i<length:
+                 print i,tokens[i]
+                 i += 1   
+                tokens.insert(length+2, {'type': 'NUMBER', 'number': 0})
+                tokens.insert(length+1, {'type': 'PLUS'})
+
             elif tokens[index - 1]['type'] == 'SLASH':
-                tokens[index - 2]['number'] = tokens[index]['number']/tokens[index-2]['number']
+                tokens[index - 2]['number'] = tokens[index-2]['number']/tokens[index]['number']
                 k = index
-                while index < len(tokens):
+                index -=2
+                length -= 2
+                
+                while k < length +1 :
                  tokens[k-1] = tokens[k+1]
                  k += 1
+            
+
             #else:
                # print 'Invalid syntax'
         index += 1
+
     return tokens
+
+
 
 
 def evaluate2(tokens):
     answer = 0
     tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
     index = 1
-    while index < len(tokens):
+    length = len(tokens)
+    while index < length:
         if tokens[index]['type'] == 'NUMBER':
             if tokens[index - 1]['type'] == 'PLUS':
                 answer += tokens[index]['number']
@@ -99,9 +119,10 @@ def evaluate2(tokens):
 
 
 while True:
+
     print '> ',
     line = raw_input()
-    tokens1 = tokenize(line)
+    tokens = tokenize(line)
     tokens = evaluate1(tokens)
     answer = evaluate2(tokens)
     print "answer = %f\n" % answer
