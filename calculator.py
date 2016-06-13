@@ -67,29 +67,34 @@ def evaluate1(tokens):
             if tokens[index - 1]['type'] == 'CROSS':
                 tokens[index - 2]['number'] = tokens[index]['number']*tokens[index-2]['number']
                 k = index
-                
                 index -=2
-                length -= 2
-                while k < length+1 :
+                while k < length-1 :
                  tokens[k - 1] = tokens[k + 1]
-            
                  k += 1
-                 i = 1
-                while i<length:
-                 print i,tokens[i]
-                 i += 1   
-                tokens.insert(length+2, {'type': 'NUMBER', 'number': 0})
-                tokens.insert(length+1, {'type': 'PLUS'})
-
+                 
+                tokens[length-1]= {'type': 'NUMBER', 'number': 0}
+                tokens[length-2] ={'type': 'PLUS'}
+               #i = 1
+               # while i<length:
+                 # print i,tokens[i],length
+                 # i += 1
+                
+               
             elif tokens[index - 1]['type'] == 'SLASH':
                 tokens[index - 2]['number'] = tokens[index-2]['number']/tokens[index]['number']
                 k = index
                 index -=2
-                length -= 2
-                
-                while k < length +1 :
-                 tokens[k-1] = tokens[k+1]
+                while k < length-1 :
+                 tokens[k - 1] = tokens[k + 1]
+            
                  k += 1
+                 
+                tokens[length-1]= {'type': 'NUMBER', 'number': 0}
+                tokens[length-2] ={'type': 'PLUS'}
+               #i = 1
+               # while i<length:
+                 # print i,tokens[i],length
+                 # i += 1
             
 
             #else:
